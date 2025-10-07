@@ -1,0 +1,29 @@
+WINDOWS API
+WinAPI in c++ is like talking directly to windows itself.
+Learn how to create windows, handle events, draw on the screen, 
+work with file, processes, threads, networking.
+
+WinAPI
+-Is a collection of functions, constants, and data types provided
+by Microsoft to interact with the windows operating system.
+- Written in C but can be accessed in C++.
+
+With winAPI you can:
+* Create and manage windows(GUI programming).
+* Handle keyboard and mouse input.
+* Draw graphics and text.
+* Work with files, memory and processes.
+
+Handle- in winAPI is a pointer that allows us to modify and work with a subject
+
+
+HANDLE: is like a reference or pointer to a window object-- in this case, a processes
+
+
+OpenProcess() is a Windows API function that tries to get access to
+a running process
+a) PROCESS_ALL_ACCESS->You're requesting all possible permissions on the
+process(read, write, terminate, etc).
+b)FALSE-> Means you do not want the handle to be inheritable
+by child processes.
+c)processID-> The ID of the process you want to open

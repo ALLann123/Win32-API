@@ -1,0 +1,114 @@
+C++ PROCESS INJECTION
+-Is a malware development technique used to execute code within the address
+space of another process, allowing for stealthy operations and evasion of security
+mechanisms.
+
+UNDERSTANDING PROCESS INJECTION
+- Is the most effective malware technique.
+- Involves inserting code inside another running process.
+Technique Consists of:
+1) Allocation primitive: Used to allocate memory.
+2) Writing primitive: Used to write malicious code to the allocated
+memory.
+3) Execution primitive: Executes the malicious code writen.
+
+IN Win32 API
+a) VirtualAllocEx() for allocation of memory.
+b) WriteProcessMemory() for writing to the allocated memory.
+c) CreateRemoteThread() for execution of Payload.
+
+
+COMMON PROCESS INJECTION TECHNIQUE
+1. Remote Thread Injection 
+- Involves creating a remote thread in the target process to execute
+injected code.
+Steps:
+    Open the target process by name e.g notepad.exe using OpenProcess.
+    Allocate memory in the target process using **VirtualAllocEx**
+    Write Payload into allocated memory using **WriteProcessMemory**
+    Create a remote thread in the target process with **CreateRemoteThread**
+
+Advantages:
+a) Simple to implement
+b) Widely supported across different versions of windows
+
+2. DLL Injection
+-Involves injecting or loading a DLL(library or .dll file) into the target 
+process and executing its code.
+Steps:
+    a. Open the target process
+    b. Allocate memory for the DLL path in the target process.
+    c. Write the DLL path into the allocated memory.
+    d. Use CreateRemoteThread to call LoadLibrary with the DLL path as an argument
+Advantages:
+a) DLLs can be easily reused and shared.
+b) Allows complex functionality to be injected.
+c) Evade AVs as the target process is a legitimate one.
+
+3. APC( Asynchronous Procedure Call)Injection
+- We inject shell code in to a remote thread then queue an Asynchronous Procedure Call Object to this thread within.
+Method is similar to Thread Hijacking Technique.
+Steps:
+    a. Open the target process and target thread.
+    b. Allocate memory for the Payload in the target process
+    c. Write the Payload into the allocated memory
+    d. Queue the APC to the target thread using QueueUserAPC.
+Advantages:
+a) Used to execute code in specific thread
+b) Bypasses basic security mechanisms as it reuses existing threads.
+
+
+4. Process Hollowing
+A new process is created in a suspended state, its memory unmapped and 
+and the memory of the target executable is mapped into it. Then resume
+the suspended process!!
+Steps:
+    a. Create a new process(svchost.exe) in a suspended state using CreateProcess.
+    b. Read the .text bloc to look for image base pointer of the created process
+    c. Allocate memory for the target executable in the new process
+    d. Write the target executable into the allocated memory.
+    e. Resume the process.
+Advantages:
+a) Hardest to detect as original process remains unchanged.
+b) Effective for large payloads.
+
+
+5. Thread Hijacking
+Involves suspending a thread in the target process, modifying its context
+to point to the injected code, and then resuming the thread.
+similar to Process hallowing but deals with threads only.
+Steps:
+    a. Open the target process and suspend a thread using SuspendThread
+    b. Allocate memory for the Payload in the target process.
+    c. Write the Payload into the allocated memory.
+    d. modify the thread context to point to the injected code using
+      SetThreadContext
+    e. Resume the thread using ResumeThread.
+Advantages:
+a) Utilized existing threads, reducing detection risk.
+b) Efficient for quick code execution.
+
+6. Inter-Process Mapping Section
+- Involves creating a new memory section and mapping a view of this section 
+locally. Shellcode copied into the local mapped view, and a remote mapped view of 
+this local view is then created in the target process. 
+steps: 
+    a. Create a Section Object using CreateFIleMapping
+    b. Map the section into the address space of the current process using Read and
+        write protection  MapViewFile
+    c. Write the payload into the allocated memory.
+    d. Open the target process
+    e. Map the section into the address space of the target process using
+        Read and Execute protection MapViewOfFile2.
+    f. Create a remote thread in the target process with CreateRemoteThread.
+Advantages:
+a) Efficient for large data transfers
+b) Provides a persistent communication channel between processes
+c) Helps to avoid AV as the first mapped memory are only in Read and Write protection
+    and the second is on Read & Execute protection. No Read, Write & Execute simultaneously
+
+
+7. Other Injection Techniques
+a) Reflective DLL Injection
+b) Atom Bombing
+c) Process Doppel Ganging, effective

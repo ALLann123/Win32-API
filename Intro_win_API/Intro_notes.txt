@@ -1,0 +1,50 @@
+**OFFENSIVE C++: GETTING STARTED WITH WIN32 API**
+-Crucial for offensive security.
+
+WHAT IS THE WINDOWS API?
+Programs often require access to modify windows subsystem
+or hardware but are resricted to maintain machine stability.
+problem solved: Ms created win32 API.
+
+Example: "WriteProcessMemory"- Writes data into a specified region of the memory's process.
+
+UserMode: environment where most applications run but has
+limited operations to prevent harm to the system.
+
+Kernel Mode: Code has unrestricted access to all system resources
+including hardware. operations that require direct interactions with 
+hardware or critical system components are executed in kernel mode.
+
+
+DEVELOPMENT environment
+Why C++?
+Widely used for its efficiency and ability to directly manipulate hardware
+resources. Good for low-level programming and offensive security tasks.
+
+Practicle Example 1: Creating a MessageBox
+"MessageBox" displays a dialogue box containing a messege. The function is 
+part of the User32 library in the Win32 API.
+Visit= simple_message_box.cpp
+
+Practicle Example 2: Process Enumeration
+-More API calls for process Enumeration. Usefull for offensive security
+for understanding the processes running on a system.
+FUNCTIONS:
+1) CreateToolhelp32Snapshot: Takes a snapshot of the current specified
+process, heaps, modules and threads used by the process.
+        /*
+        HANDLE CreateToolhelp32Snapshot(
+        [in] DWORD dwFlags,
+        [in] DWORD th32ProcessID
+        );
+        */
+2) Module32First: Retrieves information about the first module associated
+with a process.
+3) Module32Next: Retrieves information about the next module associated with
+a process or thread.
+
+
+
+
+
+

