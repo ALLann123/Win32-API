@@ -8,6 +8,10 @@ C/C++ for Malware Development🏴‍☠️
 # Shell_to_Meterpreter
 <img width="651" height="259" alt="Screenshot 2025-10-07 105813" src="https://github.com/user-attachments/assets/69f44424-7151-4db2-8fb6-70e78a15f8c2" />
 
+# Process Migration- Meterpreter
+<img width="656" height="449" alt="process_migration" src="https://github.com/user-attachments/assets/92f5c477-f4f5-43da-9188-0efadce53dcf" />
+
+
 # Thread Hijacking🥶
 <img width="1274" height="664" alt="Screenshot 2025-10-07 124324" src="https://github.com/user-attachments/assets/7ea0db20-8a8a-4337-81ed-613bdc2522a2" />
 
