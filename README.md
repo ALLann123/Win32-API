@@ -22,7 +22,9 @@ C/C++ for Malware Development🏴‍☠️
 # Process Migration- Meterpreter
 <img width="656" height="449" alt="process_migration" src="https://github.com/user-attachments/assets/92f5c477-f4f5-43da-9188-0efadce53dcf" />
 
+# Architecture- Command and Control(Anonymous)
 
+![c2_blue_print](https://github.com/user-attachments/assets/dbd30aac-4531-4381-b030-b9b052c00264)
 
 
 
