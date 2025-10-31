@@ -1,0 +1,14 @@
+TOR C2
+- Connector of the C2
+- Payload checks and if not online sleep
+- Turn kali on and onion site comes back on
+- Check command and finds run else sleep
+
+if(command!=NULL){
+	std::cout<<"[+]Running..."<<std::endl;
+}else{
+	std::cout<<"[+]Sleeping..."<<std::endl;
+	sleep(10000);
+}
+
+
