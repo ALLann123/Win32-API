@@ -26,5 +26,7 @@ C/C++ for Malware Development🏴‍☠️
 
 ![c2_blue_print](https://github.com/user-attachments/assets/dbd30aac-4531-4381-b030-b9b052c00264)
 
+Communication Channel:
 
+<img width="879" height="461" alt="lesson_2" src="https://github.com/user-attachments/assets/00506fd4-fa94-427f-9f7c-922c6fd52631" />
 
