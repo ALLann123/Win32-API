@@ -1,7 +1,7 @@
 # Win32-API
 C/C++ for Malware Development🏴‍☠️
 
-# Medium Articles for the Blog:
+# My Medium Articles MalDev:
 
 1. https://medium.com/@karisallan237/from-socket-to-shell-red-teaming-with-c-c-and-metasploit-180b8c596965
 2. https://medium.com/@karisallan237/offensive-c-process-injection-96147ea54402
