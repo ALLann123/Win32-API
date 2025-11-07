@@ -8,6 +8,7 @@ C/C++ for Malware Development🏴‍☠️
 3. https://medium.com/@karisallan237/c-c-download-and-execute-malware-win32-api-699bec264c27
 4. https://medium.com/@karisallan237/part-1-ghost-in-the-machine-the-art-of-network-pivoting-chisel-%EF%B8%8F-3aa61217ce87
 5. https://medium.com/@karisallan237/part-2-mastering-lateral-movement-with-ligolo-ng-dac616946fb2
+6. Persistence[Loading....]
 
 # Thread Hijacking🥶- Netcat
 <img width="1274" height="664" alt="Screenshot 2025-10-07 124324" src="https://github.com/user-attachments/assets/7ea0db20-8a8a-4337-81ed-613bdc2522a2" />
