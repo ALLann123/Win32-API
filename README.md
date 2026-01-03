@@ -31,6 +31,6 @@ Communication Channel:
 <img width="879" height="461" alt="lesson_2" src="https://github.com/user-attachments/assets/00506fd4-fa94-427f-9f7c-922c6fd52631" />
 
 
-# Covenant Teams Server with HTTP(S) REDIRECTOR
+# Covenant Teams Server with HTTP(S) REDIRECTOR(C&C)
 <img width="1366" height="697" alt="Screenshot 2025-11-19 113609" src="https://github.com/user-attachments/assets/2452d709-39a1-4333-be55-83bfab79c8a8" />
 
